@@ -175,25 +175,7 @@ class Woo_Minecraft {
 
 		if ( false === $output || isset( $_GET['delete-trans'] ) ) { // @codingStandardsIgnoreLine Not verifying because we don't need to, just checking if isset.
 
-			$delivered = '_wmc_delivered_' . $key;
-			$meta_key  = '_wmc_commands_' . $key;
-
-			$order_query = apply_filters( 'woo_minecraft_json_orders_args', array(
-				'posts_per_page' => '-1',
-				'post_status'    => 'wc-completed',
-				'post_type'      => 'shop_order',
-				'meta_query'     => array(
-					'relation' => 'AND',
-					array(
-						'key'     => $meta_key,
-						'compare' => 'EXISTS',
-					),
-					array(
-						'key'     => $delivered,
-						'compare' => 'NOT EXISTS',
-					),
-				),
-			) );
+			$order_query = apply_filters( 'woo_minecraft_json_orders_args', $this->get_json_order_args( $key ) );
 
 			$orders = get_posts( $order_query );
 
@@ -620,6 +602,32 @@ class Woo_Minecraft {
 				throw new Exception( 'Invalid ' . __CLASS__ . ' property: ' . $field );
 		}
 	}
+
+	/**
+	 * Gets the filter arguments for the JSON feed.
+	 *
+	 * @param string|int $key
+	 *
+	 * @return array
+	 */
+	public function get_json_order_args( $key ) {
+		return array(
+			'posts_per_page' => '-1',
+			'post_status'    => 'wc-completed',
+			'post_type'      => 'shop_order',
+			'meta_query'     => array(
+				'relation' => 'AND',
+				array(
+					'key'     => '_wmc_commands_' . $key,
+					'compare' => 'EXISTS',
+				),
+				array(
+					'key'     => '_wmc_delivered_' . $key,
+					'compare' => 'NOT EXISTS',
+				),
+			),
+		);
+}
 }
 
 function woo_minecraft() {
