@@ -14,7 +14,7 @@ before_install:
   - npm install -g gulp
   - npm install -g gulp-cli
 install:
-  - cd "src" && npm install
+  - cd "src" && npm install && cd ..
 script:
   - gulp
   - composer run-script test
