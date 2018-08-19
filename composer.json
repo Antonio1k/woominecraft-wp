@@ -17,7 +17,7 @@
         }
     ],
     "scripts": {
-        "test": "./vendor/bin/phpunit src"
+        "test": "./vendor/bin/phpunit"
     },
     "require-dev": {
         "woocommerce/woocommerce": "^3.3",
