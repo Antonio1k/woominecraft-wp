@@ -215,15 +215,13 @@ class Woo_Minecraft {
 	 * @author JayWood
 	 * @return array|mixed
 	 */
-	private function generate_order_json( $order_post, $key ) {
+	public function generate_order_json( $order_post, $key ) {
 
 		if ( ! isset( $order_post->ID ) ) {
 			return array();
 		}
 
-		$general_commands = get_post_meta( $order_post->ID, '_wmc_commands_' . $key, true );
-
-		return $general_commands;
+		return get_post_meta( $order_post->ID, '_wmc_commands_' . $key, true );
 	}
 
 
