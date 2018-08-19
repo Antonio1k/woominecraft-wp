@@ -10,7 +10,7 @@
          verbose="true">
     <testsuites>
         <testsuite>
-            <directory suffix="test.php">./tests/</directory>
+            <directory suffix="-test.php">./tests/</directory>
         </testsuite>
     </testsuites>
 </phpunit>
